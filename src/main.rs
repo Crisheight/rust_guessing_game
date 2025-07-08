@@ -14,19 +14,23 @@ fn main() {
 
         io::stdin()
             .read_line(&mut guess)
-            .expect("Failed to read line \n");
+            .expect("Failed to read line\n");
 
-        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
-        println!("You guessed: {guess} \n");
+        println!("You guessed: {guess}\n");
 
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
+            Ordering::Less => println!("Too small!\n"),
+            Ordering::Greater => println!("Too big!\n"),
             Ordering::Equal => {
                 println!("You win! The secret number was {secret_number}.");
                 break;
             }
         }
+
     }
 }
